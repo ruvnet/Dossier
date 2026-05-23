@@ -3,7 +3,7 @@
  * Used by the files API to surface produced code from the cloned repo.
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
@@ -21,7 +21,7 @@ export interface ChangedFile {
 }
 
 function runGit(cwd: string, args: string[]): string {
-  return execSync(`git ${args.join(" ")}`, {
+  return execFileSync("git", args, {
     cwd,
     encoding: "utf-8",
     stdio: ["pipe", "pipe", "pipe"],

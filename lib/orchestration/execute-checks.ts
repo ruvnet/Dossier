@@ -6,6 +6,7 @@
 
 import { spawn } from "child_process";
 import { join } from "path";
+import * as fs from "fs";
 import type { DbAdapter } from "@/lib/db/adapter";
 import { createRunCheckInputSchema } from "@/lib/schemas/slice-c";
 import {
@@ -159,12 +160,7 @@ const STUBBED_CHECK_TYPES: RunCheckType[] = [
 
 /** Detect package manager from lockfile. */
 function detectPackageManager(worktreePath: string): "pnpm" | "npm" {
-  try {
-    const fs = require("fs");
-    if (fs.existsSync(join(worktreePath, "pnpm-lock.yaml"))) return "pnpm";
-  } catch {
-    // ignore
-  }
+  if (fs.existsSync(join(worktreePath, "pnpm-lock.yaml"))) return "pnpm";
   return "npm";
 }
 
